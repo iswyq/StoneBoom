@@ -1,7 +1,7 @@
 > 说明：
 >
 > 1. 此项目作为日常积累小工具记载。将遇到的问题解决之后以简单的方式进行复现
-> 2. Stone 石头，存储。Boom：爆炸。StoneBoom 可以理解为积累爆发（厚积薄发）更加强调积累的重要性
+> 2. Stone ：石头，存储。Boom：爆炸。StoneBoom 可以理解为积累爆发（厚积薄发）更加强调积累的重要性
 
 # Map 自定义排序
 
@@ -43,8 +43,17 @@ Iterator<Map.Entry<String, Integer>> iterator = list.iterator();
 
 调试详细结果图
 
+![](https://github.com/iswyq/StoneBoom/blob/master/img/Collections%E4%BC%A0%E5%85%A5lambda%E8%B0%83%E8%AF%95.jpg)
 
+解析
+
+- lambda表达式中的o1与o2具体类型取决与传入的参数。此处是`TreeMap`下的`Entry`
+- `compareTo`方法也是不确定的。因为`String`类有`compareTo`方法，`Integer`类中也有`compareTo`方法；所以在运行之前也是无法预期到具体使用的是哪个类中的方法
+- 虽然使用的可能是不同类的`compareTo`方法，但是其逻辑都是一样的。
+- `A.compareTo(B)`：A<B 输出结果为`-1`，A=B输出结果为`0`，A>B输出结果为`1`
+- 具体要理解怎么设置，需要去看`Comparetor`接口；日常的话，也不用纠结是用`o1.compareTo(o2)`还是`o2.compareTo(o1)`。可以通过测试获得
 
 知识补充：
 
-- Entry与Map的关系
+- Entry与Map的关系：Map是java中的接口，Map.Entry是Map的一个内部接口。Entry意味条目。那么可以将Map中的一条数据(Key,Value)理解为一个条目。有一点点对象包装的味道在。
+- 将Map中的内容转换为List，也可以理解为将Map中的一个条目（数据）存储到List当中；然后再对List中的数据进行排序。
